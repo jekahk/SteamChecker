@@ -1,9 +1,10 @@
-import React, { useState, useEffect } from 'react';
-import { TextField, Container, Typography, Button, Grid } from '@material-ui/core';
+import React, { useState } from 'react';
+import { TextField, Container, Typography, Button, Grid, Paper } from '@material-ui/core';
+import { makeStyles } from '@material-ui/core/styles';
 import './index.css';
 import axios from 'axios';
 import animegrill from './images/anime-dance-gif-png.gif';
-import catgrill from './images/catgrill.gif';
+import github from './images/github.png';
 
 const App = () => {
 	const [ SteamId, giveSteamId ] = useState('');
@@ -16,15 +17,43 @@ const App = () => {
 		});
 	};
 
+	const useStyles = makeStyles((theme) => ({
+		root: {
+			flexGrow: 1
+		},
+		paper: {
+			padding: theme.spacing(2),
+			background: '#333',
+			color: 'whitesmoke',
+			textAlign: 'center',
+			fontSize: 15
+		},
+		steamName: {
+			textAlign: 'center',
+			fontSize: 40,
+			color: '#333'
+		},
+		warning: {
+			textAlign: 'center',
+			fontSize: 20,
+			color: 'red'
+		}
+	}));
+
+	const classes = useStyles();
+
 	return (
-		<body>
-			<header className="navbar">
-				<Typography component="h1" variant="h3" style={{ color: 'black' }}>
+		<React.Fragment>
+			<header>
+				<Typography className="navbar" component="h1" variant="h3" style={{ height: 120 }}>
 					Steam Profile Checker
 				</Typography>
 			</header>
 			<main>
-				<Container style={{ marginTop: 50, marginLeft: 400 }} component="main">
+				<Container style={{ marginTop: 128, width: '15%' }}>
+					<img src={animegrill} alt="grill" />
+				</Container>
+				<Container style={{ marginTop: 25, width: '85%' }}>
 					<div>
 						<form noValidate autoComplete="off">
 							<TextField
@@ -32,38 +61,57 @@ const App = () => {
 								label="Enter Steam ID here"
 								onChange={(e) => giveSteamId(e.target.value)}
 								fullWidth
+								style={{ marginBottom: 10 }}
 							/>
 						</form>
 						<form>
-							<Button variant="contained" style={{ marginTop: 10 }} onClick={getData}>
+							<Button
+								variant="contained"
+								style={{ marginBottom: 45, color: 'whitesmoke', backgroundColor: '#333' }}
+								onClick={getData}
+							>
 								Find
 							</Button>
 						</form>
-						<div>
+						<div className={classes.root}>
+							<Grid>
+								{!data.name ? <div /> : <img className="profilepicture" src={data.picture} alt="profilepicture" />}
+							</Grid>
 							<Grid container spacing={3}>
 								<Grid item xs={12}>
-									<h3>{data.name}</h3>
+									<h1 className={classes.steamName}>{data.name}</h1>
+								</Grid>
+								<Grid item xs={12}>
+									<h2 className={classes.warning}>{data.private}</h2>
 								</Grid>
 								<Grid item xs={6}>
-									<h3>Level:{data.level}</h3>
+									<Paper className={classes.paper}>Level {data.level}</Paper>
 								</Grid>
 								<Grid item xs={6}>
-									<h3>Badges:{data.badge}</h3>
+									<Paper className={classes.paper}>Badges {data.badge}</Paper>
 								</Grid>
-								<Grid item xs={3}>
-									<h3>{data.xp}</h3>
-								</Grid>
-								<Grid item xs={3}>
-									<h3>{data.nxp}</h3>
-								</Grid>
+								{!data.xp ? (
+									<Grid item xs={12}>
+										<Paper className={classes.paper}>XP</Paper>
+									</Grid>
+								) : (
+									<Grid item xs={12}>
+										<Paper className={classes.paper}>
+											Current {data.xp} | {data.nxp}
+										</Paper>
+									</Grid>
+								)}
 							</Grid>
 						</div>
 					</div>
 				</Container>
 			</main>
-			<footet />
-			<img src={animegrill} style={{ marginTop: 85 }} alt="shit" />
-		</body>
+			<footer>
+				<a style={{ display: 'table-cell' }} href="https://github.com/jekahk" target="_blank" rel="noopener noreferrer">
+					<img className="github" src={github} alt="github" />
+				</a>
+			</footer>
+		</React.Fragment>
 	);
 };
 
