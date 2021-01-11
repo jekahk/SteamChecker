@@ -1,14 +1,17 @@
 import React, { useState } from 'react';
-import { TextField, Container, Typography, Button, Grid, Paper } from '@material-ui/core';
+import { TextField, Container, Button, Grid, Paper } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 import './index.css';
 import axios from 'axios';
 import animegrill from './images/anime-dance-gif-png.gif';
 import github from './images/github.png';
+import headerlogo from './images/headerlogo.png';
 
 const App = () => {
 	const [ SteamId, giveSteamId ] = useState('');
 	const [ data, setData ] = useState({});
+
+	axios.defaults.baseURL = 'https://www.steam-check-api.xyz/';
 
 	const getData = () => {
 		axios.post('give_id', { SteamId: SteamId }).then((res) => {
@@ -44,15 +47,16 @@ const App = () => {
 
 	return (
 		<React.Fragment>
+			<div>
+			
 			<header>
-				<Typography className="navbar" component="h1" variant="h3" style={{ height: 120 }}>
-					Steam Profile Checker
-				</Typography>
+				<img className="logo" src={headerlogo} alt="Steam Checker" />
 			</header>
+
 			<main>
-				<Container style={{ marginTop: 128, width: '15%' }}>
+				<Container className="anime" style={{ marginTop: 93, width: '15%', display: 'flex', alignItems: 'flex-end' }}>
 					<img src={animegrill} alt="grill" />
-				</Container>
+				</Container> 
 				<Container style={{ marginTop: 25, width: '85%' }}>
 					<div>
 						<form noValidate autoComplete="off">
@@ -111,6 +115,7 @@ const App = () => {
 					<img className="github" src={github} alt="github" />
 				</a>
 			</footer>
+			</div>
 		</React.Fragment>
 	);
 };

@@ -2,24 +2,25 @@
 
 header {
 	font-family: 'Press Start 2P', cursive;
-}
-
-.navbar {
+	height: 12vh;
 	background-color: #333;
-	color: whitesmoke;
 	display: flex;
 	align-items: center;
 	justify-content: center;
-	height: 300;
 	text-align: center;
-	margin-top: 25px;
-	margin-bottom: 15;
+}
+
+.logo {
+	margin-top: 20px;
+	margin-bottom: 15px;
+	width: auto;
+	height: 10vh;
 }
 
 main {
 	margin: 0;
 	width: auto;
-	background-color: rgb(255, 234, 206);
+	height: 84vh;
 	font-family: 'Press Start 2P', cursive;
 	display: flex;
 	flex-direction: row;
@@ -27,13 +28,12 @@ main {
 
 body {
 	margin: auto;
-	height: auto;
+	height: 100vh;
+	background-color: rgb(255, 234, 206);
 }
 
-.wholepage {
-	margin: 0;
-	width: 100vw;
-	background-color: rgb(255, 234, 206);
+.anime {
+	position: static;
 }
 
 .profilepicture {
@@ -48,6 +48,7 @@ body {
 }
 
 footer {
+	height: 4vh;
 	width: auto;
 	display: flex;
 	flex-direction: row-reverse;
@@ -58,8 +59,8 @@ footer {
 	margin-top: 6px;
 	margin-right: 15px;
 	margin-bottom: 5px;
-	width: 35px;
-	height: auto;
+	width: auto;
+	height: 3vh;
 }
 
 .github:hover {
