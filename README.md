@@ -11,3 +11,6 @@ Public profile:
 
 Private profile:
 ![private](https://i.gyazo.com/1aed12e5407a1f72b805958b1eef0551.png)
+
+Invalid ID/URL:
+![invalid](https://i.gyazo.com/fe45292907c1b1608341857fbbaea8cc.png)
