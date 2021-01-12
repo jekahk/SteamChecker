@@ -8,11 +8,15 @@ import github from './images/github.png';
 import headerlogo from './images/headerlogo.png';
 
 const App = () => {
+
+	//hooks for the Steam ID/URL that will be sent and the object that will be received
 	const [ SteamId, giveSteamId ] = useState('');
 	const [ data, setData ] = useState({});
 
+	//defines the url of API
 	axios.defaults.baseURL = 'https://www.steam-check-api.xyz/';
 
+	//function that makes the received object from API set to variable data
 	const getData = () => {
 		axios.post('give_id', { SteamId: SteamId }).then((res) => {
 			console.log(res.data);
@@ -20,6 +24,7 @@ const App = () => {
 		});
 	};
 
+	//styles fro material-ui components
 	const useStyles = makeStyles((theme) => ({
 		root: {
 			flexGrow: 1
