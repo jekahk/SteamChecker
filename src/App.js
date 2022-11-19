@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { TextField, Container, Button, Grid, Paper } from '@material-ui/core';
+import React, { useEffect, useState } from 'react';
+import { TextField, Container, Button, Grid, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 import './index.css';
 import axios from 'axios';
@@ -7,14 +7,32 @@ import animegrill from './images/anime-dance-gif-png.gif';
 import github from './images/github.png';
 import headerlogo from './images/headerlogo.png';
 
+
 const App = () => {
 
 	//hooks for the Steam ID/URL that will be sent and the object that will be received
 	const [ SteamId, giveSteamId ] = useState('');
 	const [ data, setData ] = useState({});
+	const [history, setHistory] = useState([]);
 
 	//defines the url of API
-	axios.defaults.baseURL = 'https://www.steam-check-api.xyz/';
+	//axios.defaults.baseURL = 'https://www.steam-check-api.xyz/';
+	axios.defaults.baseURL = 'http://127.0.0.1:5000/';
+
+	useEffect(() => {
+		getHistory();
+	},[data])
+
+
+	const getHistory = () => {
+		axios.get('get_history').then((res) => {
+			const rows = [];
+			res.data.map((item) => {
+				rows.push(createHistoryData(item[0], item[1], item[2], item[3]));
+			})
+			return setHistory(rows)
+		})
+	}
 
 	//function that makes the received object from API set to variable data
 	const getData = () => {
@@ -23,6 +41,10 @@ const App = () => {
 			setData(res.data);
 		});
 	};
+
+	function createHistoryData(name, level, badge, xp) {
+		return { name, level, badge, xp};
+	  }
 
 	//styles fro material-ui components
 	const useStyles = makeStyles((theme) => ({
@@ -62,7 +84,7 @@ const App = () => {
 				<Container className="anime" style={{ marginTop: 93, width: '15%', display: 'flex', alignItems: 'flex-end' }}>
 					<img src={animegrill} alt="grill" />
 				</Container> 
-				<Container style={{ marginTop: 25, width: '85%' }}>
+				<Container style={{ marginTop: 25, width: '85%', overflowX: 'auto' }}>
 					<div>
 						<form noValidate autoComplete="off">
 							<TextField
@@ -76,10 +98,10 @@ const App = () => {
 						<form>
 							<Button
 								variant="contained"
-								style={{ marginBottom: 45, color: 'whitesmoke', backgroundColor: '#333' }}
+								style={{ marginBottom: 45, color: 'whitesmoke', backgroundColor: '#333', fontSize: 'small' }}
 								onClick={getData}
 							>
-								Find
+								<div className='font'>Find</div>
 							</Button>
 						</form>
 						<div className={classes.root}>
@@ -112,6 +134,36 @@ const App = () => {
 								)}
 							</Grid>
 						</div>
+					</div>
+					<div className={classes.root} style={{marginTop: 25}}>
+						<div style={{marginBottom: 10, color: '#333'}}>History</div>
+						<TableContainer component={Paper}>
+							<Table className={classes.paper} sx={{ minWidth: 650 }} size="small" aria-label="history table">
+								<TableHead>
+									<TableRow>
+										<TableCell><div className="font">Name</div></TableCell>
+										<TableCell align="right"><div className="font">Level</div></TableCell>
+										<TableCell align="right"><div className="font">Badges</div></TableCell>
+										<TableCell align="right"><div className="font">XP</div></TableCell>
+									</TableRow>
+								</TableHead>
+								<TableBody>
+									{history.map((row, index) => (
+										<TableRow
+										key={index}
+										sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
+										>
+										<TableCell component="th" scope="row">
+										<div className="font">{row.name}</div>
+										</TableCell>
+										<TableCell align="right"><div className="font">{row.level}</div></TableCell>
+										<TableCell align="right"><div className="font">{row.badge}</div></TableCell>
+										<TableCell align="right"><div className="font">{row.xp}</div></TableCell>
+										</TableRow>
+									))}
+								</TableBody>
+							</Table>
+						</TableContainer>
 					</div>
 				</Container>
 			</main>

@@ -17,6 +17,11 @@ header {
 	height: 10vh;
 }
 
+.font {
+	font-family: 'Press Start 2P', cursive;
+	color: whitesmoke;
+}
+
 main {
 	margin: 0;
 	width: auto;
